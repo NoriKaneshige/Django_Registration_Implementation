@@ -12,9 +12,9 @@
     <title>Registration example</title>
 </head>
 <body>
-    <!-- Bav bar -->
+    <!-- ナビバー -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'register:top' %}">Homepage</a>
+      <a class="navbar-brand" href="{% url 'register:top' %}">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,12 +23,18 @@
         <ul class="navbar-nav mr-auto">
           {% if user.is_authenticated %}
           <li>
+            <a class="nav-item nav-link" href="{% url 'register:user_detail' user.pk %}">User_Info</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'register:user_update' user.pk %}">User_Info_Update</a>
+          </li>
+          <li>
             <a class="nav-item nav-link" href="{% url 'register:logout' %}">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'register:login' %}">
-            Hello、guest！Here is Login
+            Hello, guest! Login
           </a>
           </li>
           {% endif %}

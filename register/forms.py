@@ -36,3 +36,16 @@ class UserCreateForm(UserCreationForm):
 # In case that user finished a temporary registration, but the time expired,
 # this user's email is already stored, and he gets error.
 # To fix this, clean_email delete emails that have 1s_active=False.
+
+
+class UserUpdateForm(forms.ModelForm):
+    """ user information update form """
+
+    class Meta:
+        model = User
+        fields = ('last_name', 'first_name',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

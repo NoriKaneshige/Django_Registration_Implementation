@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView, LogoutView
 )
@@ -11,11 +11,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.signing import BadSignature, SignatureExpired, loads, dumps
 
 from django.http import Http404, HttpResponseBadRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from django.template.loader import render_to_string
 from django.views import generic
 from .forms import (
-    LoginForm, UserCreateForm
+    LoginForm, UserCreateForm, UserUpdateForm
 )
 
 # get_user_model function receives UserModel (default User or custom User) that is currently used.
@@ -103,3 +103,36 @@ class UserCreateComplete(generic.TemplateView):
                     return super().get(request, **kwargs)
 
         return HttpResponseBadRequest()
+
+
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+    # if user doesn't meet requirements, show 403 page
+    # False, redirect to login page
+
+    def test_func(self):
+        user = self.request.user
+        return user.pk == self.kwargs['pk'] or user.is_superuser
+
+
+class UserDetail(OnlyYouMixin, generic.DetailView):
+    model = User
+    template_name = 'register/user_detail.html'
+
+
+class UserUpdate(OnlyYouMixin, generic.UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = 'register/user_form.html'
+
+    def get_success_url(self):
+        return resolve_url('register:user_detail', pk=self.kwargs['pk'])
+
+
+
+
+
+
+
+
