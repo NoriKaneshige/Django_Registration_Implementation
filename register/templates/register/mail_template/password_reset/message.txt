@@ -1,0 +1,8 @@
+Hi, {{ user.username }} !
+
+Please go to the link below and reset your password!
+
+URL for password reset
+{{ protocol}}://{{ domain }}{% url 'register:password_reset_confirm' uid token %}
+
+Thank you!

@@ -31,6 +31,9 @@
           <li>
             <a class="nav-item nav-link" href="{% url 'register:logout' %}">Logout</a>
           </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'register:password_change' %}">Change_Password</a>
+          </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'register:login' %}">
