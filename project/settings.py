@@ -125,3 +125,10 @@ STATIC_URL = '/static/'
 # register app
 # Need to declare that we use User Model as default
 AUTH_USER_MODEL = 'register.User'
+
+# set where to login, set redirection location after login
+LOGIN_URL = 'register:login'
+LOGIN_REDIRECT_URL = 'register:top'
+
+# show the contents of email confirmation in console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,0 +1,10 @@
+Hi, {{ user.email }} !
+Thank you for the registration.
+To activate your account, please go to the URL and complete the registration.
+Note that your registration process is not complete yet.
+
+Activation URL
+
+{{ protocol}}://{{ domain }}{% url 'register:user_create_complete' token %}
+
+Thank you very much!
