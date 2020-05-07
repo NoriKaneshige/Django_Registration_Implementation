@@ -1,0 +1,5 @@
+Please click the link below to change your email address!
+
+{{ protocol}}://{{ domain }}{% url 'register:email_change_complete' token %}
+
+Thank you!
